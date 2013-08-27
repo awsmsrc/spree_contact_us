@@ -1,6 +1,6 @@
 class Spree::ContactUs::ContactsController < Spree::StoreController
+  helper 'spree/products'
 
-  helper "spree/products"
   def create
     @contact = Spree::ContactUs::Contact.new(params[:contact_us_contact])
 
@@ -23,5 +23,4 @@ class Spree::ContactUs::ContactsController < Spree::StoreController
   def accurate_title
     t('spree.contact_us.contacts.new.contact_us')
   end
-
 end

@@ -1,6 +1,6 @@
-<% content_for :head do -%>
+<% content_for :head do %>
   <meta name="title" content="<%= t('.contact_us') %>">
-<% end -%>
+<% end %>
 
 <% content_for :sidebar do %>
   <% if "products" == @current_controller && @taxon %>
@@ -10,35 +10,53 @@
   <% end %>
 <% end %>
 
+<div class="inner_banner_container">
+  <div class="inner_banner">
+    <img alt="Temp_inner_banner" src="/assets/temp_inner_banner.jpg">
+    <div class="banner_text">
+      <h1><%= t('.contact_us') %></h1>
+    </div>
+  </div>
+</div>
+<div id="page_content" class="article">
+  <p>
+    If you would like to see some samples of our work please fill in your details below and we will send you a free sample pack!
+  </p>
+</div>
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @contact } %>
 
-<h1><%= t('.contact_us') %></h1>
 <%= form_for @contact, :url => contacts_path, :html => { :novalidate => '' } do |f| %>
-  <% if SpreeContactUs.require_name %>
-    <p>
+  <div class='row-fluid'>
+    <div class="span6">
       <%= f.label :name %>
-      <span class="required">*</span><br/>
-      <%= f.text_field :name, class: 'required' %>
-    </p>
-  <% end %>
-  <p>
-    <%= f.label :email %>
-    <span class="required">*</span><br/>
-    <%= f.email_field :email, class: 'required email' %>
-  </p>
-  <% if SpreeContactUs.require_subject %>
-    <p>
-      <%= f.label :subject %>
-      <span class="required">*</span><br/>
-      <%= f.text_field :subject, class: 'required' %>
-    </p>
-  <% end %>
-  <p>
-    <%= f.label :message %>
-    <span class="required">*</span><br/>
-    <%= f.text_area :message, class: 'required' %>
-  </p>
-  <p>
-    <%= f.submit t('.submit'), :alt => t('.submit'), :id => 'contact_us_contact_submit', :title => t('.submit') %>
-  </p>
+      <%= f.text_field :name %>
+      <%= f.label :address %>
+      <%= f.text_area :address %>
+    </div>
+    <div class="span6">
+      <%= f.label :company %>
+      <%= f.text_field :company %>
+      <%= f.label :telphone %>
+      <%= f.text_field :telephone %>
+      <%= f.label :email %>
+      <%= f.text_field :email %>
+      <%= f.label :postcode %>
+      <%= f.text_field :postcode %>
+    </div>
+  </div>
+  <div class="row-fluid">
+    <div class="span12">
+      <%= f.label :body %>
+      <%= f.text_area :body %>
+    </div>
+  </div>
+  <div class="row-fluid">
+    <div class="span6">
+      <%= f.label :awareness %>
+      <%= f.select :awareness, options_for_select([]) %>
+    </div>
+    <div class="span6">
+      <%= f.submit t('.submit'), :alt => t('.submit'), :id => 'contact_us_contact_submit', :title => t('.submit') %>
+    </div>
+  </div>
 <% end %>

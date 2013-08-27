@@ -1,21 +1,22 @@
 module Spree
   module ContactUs
     class Contact
-
       include ActiveModel::Conversion
       include ActiveModel::Validations
+      extend ActiveModel::Naming
 
-      attr_accessor :email, :message, :name, :subject
+      AVAILABLE_FIELDS = [:email, :address, :body, :message, :name, :telephone, :address, :postcode, :company, :awareness]
+
+      attr_accessor *AVAILABLE_FIELDS
 
       validates :email,   :format => { :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i },
                           :presence => true
       validates :message, :presence => true
-      validates :name,    :presence => {:if => Proc.new{SpreeContactUs.require_name}}
-      validates :subject, :presence => {:if => Proc.new{SpreeContactUs.require_subject}}
+      validates :name,    :presence => true
 
       def initialize(attributes = {})
-        [:email, :message, :name, :subject].each do |attribute|
-          self.send("#{attribute}=", attributes[attribute]) if attributes and attributes.has_key?(attribute)
+        AVAILABLE_FIELDS.each do |attribute|
+          self.send("#{attribute}=", attributes[attribute.to_s]) if attributes and attributes.has_key?(attribute)
         end
       end
 
@@ -30,7 +31,6 @@ module Spree
       def persisted?
         false
       end
-
     end
   end
 end
